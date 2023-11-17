@@ -36,14 +36,31 @@ namespace ControleDeContatos.Controllers
             return View();
         }
 
-        public IActionResult Editar()
+        public IActionResult Editar(int id)
         {
-            return View();
+            ContatoModel contato = _icontato.BuscarPorId(id);
+            return View(contato);
         }
 
-        public IActionResult Apagar()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(ContatoModel contato)
         {
-            return View();
+            _icontato.Atualizar(contato);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Deletar(int id)
+        {
+            ContatoModel contato = _icontato.BuscarPorId(id);
+            return View(contato);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Apagar(int id)
+        {
+            _icontato.Apagar(id);
+            return RedirectToAction("Index");
         }
     }
 }
