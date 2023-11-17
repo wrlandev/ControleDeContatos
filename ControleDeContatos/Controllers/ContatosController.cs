@@ -27,8 +27,13 @@ namespace ControleDeContatos.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Criar(ContatoModel contato)
         {
-            _icontato.Adicionar(contato);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _icontato.Adicionar(contato);
+                return RedirectToAction("Index");
+            }
+
+            return View(contato);
         }
 
         public IActionResult Detalhes()
@@ -46,8 +51,14 @@ namespace ControleDeContatos.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Editar(ContatoModel contato)
         {
-            _icontato.Atualizar(contato);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _icontato.Atualizar(contato);
+                return RedirectToAction("Index");
+            }
+
+            return View(contato);
+
         }
 
         public IActionResult Deletar(int id)
